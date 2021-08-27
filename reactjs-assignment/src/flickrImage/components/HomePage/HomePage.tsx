@@ -3,6 +3,8 @@ import * as S from "./styles";
 import { FlickrPhoto, getFlickrPhotoUrl, searchFlickrPhotos } from "../../../flickr-client";
 import { useEffect, useState } from "react";
 
+import { ImageCard } from "../ImageCard";
+
 export const HomePage = () => {
   const [items, setItems] = useState<FlickrPhoto[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,6 +27,7 @@ export const HomePage = () => {
               {/* <S.Photo> */}
               <img src={getFlickrPhotoUrl(item)} alt=""></img>
               {/* </S.Photo> */}
+             
             </>
           );
         })}
