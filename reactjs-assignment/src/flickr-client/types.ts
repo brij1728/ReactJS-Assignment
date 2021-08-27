@@ -1,4 +1,4 @@
-export interface ImageProps {
+export interface FlickrPhoto {
     id: string;
     farm: number;
     secret: string;

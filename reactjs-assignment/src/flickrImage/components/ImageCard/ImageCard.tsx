@@ -1,8 +1,6 @@
-import { ImageProps } from "../types";
+import { FlickrPhoto } from "../../../flickr-client/";
 
-export const ImageCard: React.FC<ImageProps> = (props) => {
-
-  
+export const ImageCard: React.FC<FlickrPhoto> = (props) => {
   return (
     <>
       <ul>{props.id}</ul>
