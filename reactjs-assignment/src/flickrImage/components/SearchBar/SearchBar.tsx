@@ -1,14 +1,12 @@
-import { useState } from "react";
 
-export const SearchBar = () => {
-  const [searchText, setSearchText] = useState("");
-  const handleChange = (event: any) => {
-    setSearchText(event.target.value);
-  };
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-  };
-
+export interface SearchProps {
+  onChange: (text: string) => void;
+  onSubmit: () => void;
+}
+export const SearchBar: React.FC<SearchProps> = ({
+  onChange,
+  onSubmit,
+}) => {
   return (
     <>
       <div>
@@ -16,10 +14,11 @@ export const SearchBar = () => {
         <input
           type="text"
           placeholder="Search"
-          value={searchText}
-          onChange={handleChange}
+          onChange={(event) => {
+            onChange(event.target.value.trim());
+          }}
         ></input>
-        <button type="submit" onClick={handleSubmit}>
+        <button type="submit" onClick={onSubmit}>
           Search
         </button>
       </div>

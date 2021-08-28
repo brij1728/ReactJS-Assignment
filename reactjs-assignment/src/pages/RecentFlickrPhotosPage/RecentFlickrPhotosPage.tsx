@@ -1,9 +1,17 @@
+import * as S from "./styles";
+
 import {
   FlickrPhoto,
   fetchRecentFlickrPhotos,
   getFlickrPhotoUrl,
 } from "../../flickr-client";
 import { useEffect, useState } from "react";
+
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 
 export const RecentFlickrPhotosPage = () => {
   const [items, setItems] = useState<FlickrPhoto[]>([]);
@@ -17,20 +25,25 @@ export const RecentFlickrPhotosPage = () => {
   }, []);
   return (
     <>
-      {items.map((item) => {
-        console.log(item);
-
-        return (
-          <>
-            {/* <S.Photo> */}
-            <img src={getFlickrPhotoUrl(item)} alt=""></img>
-            {/* </S.Photo> */}
-          </>
-        );
-      })}
+      <S.Wrapper>
+       
+          <div className="grid">
+            {items.map((item) => {
+              return (
+                <>
+                  <div className='image'>
+                    <Card>
+                      <Card.Body>
+                        <Image src={getFlickrPhotoUrl(item)} fluid />
+                      </Card.Body>
+                    </Card>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+       
+      </S.Wrapper>
     </>
   );
 };
-function recentFlickrPhotos() {
-  throw new Error("Function not implemented.");
-}
