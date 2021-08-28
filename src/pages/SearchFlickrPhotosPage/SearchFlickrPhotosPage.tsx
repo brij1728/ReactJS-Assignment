@@ -1,5 +1,3 @@
-import * as S from "./styles";
-
 import {
   FlickrPhoto,
   getFlickrPhotoUrl,
@@ -39,13 +37,13 @@ export const SearchFlickrPhotosPage = () => {
           onSubmit={() => handleSubmit}
         />
         {/* <S.Wrapper> */}
-          {items.map((item) => {
-            return (
-              <>
-                <Image src={getFlickrPhotoUrl(item)} fluid />
-              </>
-            );
-          })}
+        {items.map((item) => {
+          return (
+            <>
+              <Image src={getFlickrPhotoUrl(item)} fluid />
+            </>
+          );
+        })}
         {/* </S.Wrapper> */}
       </div>
     </>
