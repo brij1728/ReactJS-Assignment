@@ -1,5 +1,6 @@
 import * as S from "./styles";
 
+import { Card, Image } from "react-bootstrap";
 import {
   FlickrPhoto,
   fetchRecentFlickrPhotos,
@@ -7,42 +8,37 @@ import {
 } from "../../flickr-client";
 import { useEffect, useState } from "react";
 
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
-import Row from "react-bootstrap/Row";
-
-export const RecentFlickrPhotosPage = () => {
-  const [items, setItems] = useState<FlickrPhoto[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+export const RecentFlickrPhotosPage: React.FC = () => {
+  const [photos, setPhotos] = useState<FlickrPhoto[]>([]);
 
   useEffect(() => {
     fetchRecentFlickrPhotos().then((photos) => {
-      setItems(photos);
-      setIsLoaded(true);
+      setPhotos(photos);
     });
   }, []);
+  
   return (
     <>
       <S.Wrapper>
-       
-          <div className="grid">
-            {items.map((item) => {
-              return (
-                <>
-                  <div className='image'>
-                    <Card>
-                      <Card.Body>
-                        <Image src={getFlickrPhotoUrl(item)} fluid />
-                      </Card.Body>
-                    </Card>
-                  </div>
-                </>
-              );
-            })}
-          </div>
-       
+        <div className="grid">
+          {photos.map((item) => {
+            return (
+              <>
+                <div className="image">
+                  <Card>
+                    <Card.Body>
+                      <Image
+                        key={item.id}
+                        src={getFlickrPhotoUrl(item)}
+                        fluid
+                      />
+                    </Card.Body>
+                  </Card>
+                </div>
+              </>
+            );
+          })}
+        </div>
       </S.Wrapper>
     </>
   );
