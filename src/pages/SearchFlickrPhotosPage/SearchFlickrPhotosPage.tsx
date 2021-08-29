@@ -1,11 +1,7 @@
-import {
-  FlickrPhoto,
-  getFlickrPhotoUrl,
-  searchFlickrPhotos,
-} from "../../flickr-client";
+import { FlickrPhoto, searchFlickrPhotos } from "../../flickr-client";
 import { useEffect, useState } from "react";
 
-import Image from "react-bootstrap/Image";
+import { PhotosList } from "../../flickrImage/components/PhotosList";
 import { SearchBar } from "../../flickrImage/components/SearchBar";
 import { useDebounce } from "use-debounce";
 
@@ -17,17 +13,17 @@ export const SearchFlickrPhotosPage = () => {
     event.preventDefault();
   };
 
-  const [items, setItems] = useState<FlickrPhoto[]>([]);
+  const [photos, setPhotos] = useState<FlickrPhoto[]>([]);
 
   useEffect(() => {
     console.log(searchTextDebounced);
 
     if (searchTextDebounced.length < 3) {
-      setItems([]);
+      setPhotos([]);
     } else {
     }
     searchFlickrPhotos(searchTextDebounced).then((photos) => {
-      setItems(photos);
+      setPhotos(photos);
     });
   }, [searchTextDebounced]);
 
@@ -38,9 +34,7 @@ export const SearchFlickrPhotosPage = () => {
           onChange={(newValue) => setSearchText(newValue)}
           onSubmit={() => handleSubmit}
         />
-        {items.map((item) => {
-          return <Image  key={item.id} src={getFlickrPhotoUrl(item)} fluid />;
-        })}
+        <PhotosList photos={photos} />
       </div>
     </>
   );
