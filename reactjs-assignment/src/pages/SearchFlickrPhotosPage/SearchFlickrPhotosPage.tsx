@@ -1,5 +1,3 @@
-import * as S from "./styles";
-
 import {
   FlickrPhoto,
   getFlickrPhotoUrl,
@@ -9,9 +7,11 @@ import { useEffect, useState } from "react";
 
 import Image from "react-bootstrap/Image";
 import { SearchBar } from "../../flickrImage/components/SearchBar";
+import { useDebounce } from "use-debounce";
 
 export const SearchFlickrPhotosPage = () => {
   const [searchText, setSearchText] = useState("");
+  const [searchTextDebounced] = useDebounce(searchText, 500);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -20,16 +20,16 @@ export const SearchFlickrPhotosPage = () => {
   const [items, setItems] = useState<FlickrPhoto[]>([]);
 
   useEffect(() => {
-    console.log(searchText);
+    console.log(searchTextDebounced);
 
-    if (searchText.length < 3) {
+    if (searchTextDebounced.length < 3) {
       setItems([]);
     } else {
     }
-    searchFlickrPhotos(searchText).then((photos) => {
+    searchFlickrPhotos(searchTextDebounced).then((photos) => {
       setItems(photos);
     });
-  }, [searchText]);
+  }, [searchTextDebounced]);
 
   return (
     <>
@@ -38,15 +38,9 @@ export const SearchFlickrPhotosPage = () => {
           onChange={(newValue) => setSearchText(newValue)}
           onSubmit={() => handleSubmit}
         />
-        {/* <S.Wrapper> */}
-          {items.map((item) => {
-            return (
-              <>
-                <Image src={getFlickrPhotoUrl(item)} fluid />
-              </>
-            );
-          })}
-        {/* </S.Wrapper> */}
+        {items.map((item) => {
+          return <Image  key={item.id} src={getFlickrPhotoUrl(item)} fluid />;
+        })}
       </div>
     </>
   );
